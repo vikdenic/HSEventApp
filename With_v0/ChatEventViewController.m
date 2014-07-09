@@ -48,7 +48,12 @@
 
     self.chatObjects = [NSMutableArray array];
 
-    self.channelPlaceHolder = [NSString stringWithFormat:@"%@", [self.event objectForKey:@"title"]];
+//    NSString *trimmedEventName = [NSString stringWithFormat:@"%@", [[self.event objectForKey:@"title"]stringByReplacingOccurrencesOfString:@" " withString:@""]];
+
+    NSString *trimmedEventName = [self.event objectForKey:@"titleComp"];
+
+    self.channelPlaceHolder = trimmedEventName;
+//    self.channelPlaceHolder = [NSString stringWithFormat:@"%@", [self.event objectForKey:@"title"]];
     self.navigationController.hidesBottomBarWhenPushed = NO;
     [[self navigationController] setNavigationBarHidden:YES animated:YES];
 
@@ -73,6 +78,9 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    NSString *trimmedEventName = [self.event objectForKey:@"titleComp"];
+
+    self.channelPlaceHolder = trimmedEventName;
 
     [self getChatObject];
 
@@ -122,10 +130,13 @@
     ///
     // Send a notification to all devices subscribed to the "Giants" channel.
 
-    PFPush *push = [[PFPush alloc] init];
-    [push setChannel:self.channelPlaceHolder];
-    [push setMessage:@"New Message!"];
-    [push sendPushInBackground];
+    NSDictionary *messageDictionary = @{@"aps":@{@"alert":@"New Message!", @"username":[PFUser currentUser].username}};
+
+    [PFPush sendPushDataToChannel:self.channelPlaceHolder withData:messageDictionary error:nil];
+//    PFPush *push = [[PFPush alloc] init];
+//    [push setChannel:self.channelPlaceHolder];
+//    [push setMessage:@"New Message!"];
+//    [push sendPushInBackground];
 
     ///multiple channel prototype
 //    NSArray *channels = [NSArray arrayWithObjects:@"Giants", @"Mets", nil];

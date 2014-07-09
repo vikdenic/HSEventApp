@@ -217,6 +217,7 @@
     PFObject *event = [PFObject objectWithClassName:@"Event"];
 //    event[@"title"] = self.titleTextView.text;
     event[@"title"] = self.titleTextField.text;
+    event[@"titleComp"] = [self.titleTextField.text stringByReplacingOccurrencesOfString:@" " withString:@""];
     event[@"details"] = self.detailsTextView.text;
     event[@"location"] = self.eventName;
     PFGeoPoint *geoPoint = [PFGeoPoint geoPointWithLatitude:self.coordinate.latitude

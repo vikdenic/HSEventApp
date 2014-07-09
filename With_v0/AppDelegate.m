@@ -23,9 +23,9 @@
      UIRemoteNotificationTypeAlert|
      UIRemoteNotificationTypeSound];
 
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-//    [[UINavigationBar appearance]setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
-    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeNone | UIRemoteNotificationTypeNone)];
+//    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+////    [[UINavigationBar appearance]setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
+//    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeNone | UIRemoteNotificationTypeNone)];
 
     [[UIApplication sharedApplication]setApplicationIconBadgeNumber:0];
 
@@ -51,10 +51,15 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 
 - (void)application:(UIApplication *)application
 didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    NSLog(@"USERINFOHERE: %@",userInfo);
 
     [[NSNotificationCenter defaultCenter] postNotificationName:@"Test1" object:self];
+
+    if(![userInfo[@"aps"][@"username"] isEqualToString:[PFUser currentUser].username])
+    {
     [PFPush handlePush:userInfo];
-    
+    }
+
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

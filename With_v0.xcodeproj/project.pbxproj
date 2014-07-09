@@ -113,6 +113,7 @@
 		93BF983E1963403400A7DD67 /* UITabBarController+hidable.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BF983D1963403400A7DD67 /* UITabBarController+hidable.m */; };
 		93CE89051961399D007BA434 /* IdeasViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CE89041961399D007BA434 /* IdeasViewController.m */; };
 		93CE890819613D15007BA434 /* IdeasTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CE890719613D15007BA434 /* IdeasTableViewCell.m */; };
+		93FE65D9196DBDAE00A1D449 /* HomeSwiftControllerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93FE65D8196DBDAD00A1D449 /* HomeSwiftControllerViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -305,6 +306,9 @@
 		93CE89041961399D007BA434 /* IdeasViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IdeasViewController.m; sourceTree = "<group>"; };
 		93CE890619613D15007BA434 /* IdeasTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IdeasTableViewCell.h; sourceTree = "<group>"; };
 		93CE890719613D15007BA434 /* IdeasTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IdeasTableViewCell.m; sourceTree = "<group>"; };
+		93F9FB2C196DCCD9000AB487 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = MyPlayground.playground; path = ../MyPlayground.playground; sourceTree = "<group>"; };
+		93FE65D7196DBDAD00A1D449 /* With_v0-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "With_v0-Bridging-Header.h"; sourceTree = "<group>"; };
+		93FE65D8196DBDAD00A1D449 /* HomeSwiftControllerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeSwiftControllerViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -361,10 +365,13 @@
 		60A7DAD3195E2FBE003258F0 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				93FE65D7196DBDAD00A1D449 /* With_v0-Bridging-Header.h */,
+				93F9FB2C196DCCD9000AB487 /* MyPlayground.playground */,
 				60F47AB0194E5223007422E7 /* HomeTableViewCell.h */,
 				60F47AB1194E5223007422E7 /* HomeTableViewCell.m */,
 				93952FC2194D6BEA001AA3E4 /* HomeViewController.h */,
 				93952FC3194D6BEA001AA3E4 /* HomeViewController.m */,
+				93FE65D8196DBDAD00A1D449 /* HomeSwiftControllerViewController.swift */,
 				609FDC75195F551100EF7C5B /* InvitesTableViewCell.h */,
 				609FDC76195F551100EF7C5B /* InvitesTableViewCell.m */,
 				60694164195FD98F00C8310F /* InvitesButton.h */,
@@ -776,6 +783,7 @@
 				6091D1F1195B2806001A371E /* PendingFriendRequestsViewController.m in Sources */,
 				60C72085194F677300ADE5DF /* ChatEventViewController.m in Sources */,
 				608B6C991950DBCF007D4503 /* LoginViewController.m in Sources */,
+				93FE65D9196DBDAE00A1D449 /* HomeSwiftControllerViewController.swift in Sources */,
 				930D190F195886DC00AE4AE1 /* GKImagePicker.m in Sources */,
 				60A7DAD2195E2EE3003258F0 /* FriendsListTableViewCell.m in Sources */,
 				60A7DAE1195E3E55003258F0 /* FriendsListFriendButton.m in Sources */,
@@ -960,6 +968,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -971,8 +980,11 @@
 				GCC_PREFIX_HEADER = "With_v0/With_v0-Prefix.pch";
 				INFOPLIST_FILE = "With_v0/With_v0-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "431BF2D4-0EFA-4CF7-A145-97C5C7B9744D";
+				SWIFT_OBJC_BRIDGING_HEADER = "With_v0/With_v0-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -982,6 +994,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -993,8 +1006,10 @@
 				GCC_PREFIX_HEADER = "With_v0/With_v0-Prefix.pch";
 				INFOPLIST_FILE = "With_v0/With_v0-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "431BF2D4-0EFA-4CF7-A145-97C5C7B9744D";
+				SWIFT_OBJC_BRIDGING_HEADER = "With_v0/With_v0-Bridging-Header.h";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

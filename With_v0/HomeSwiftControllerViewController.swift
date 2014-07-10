@@ -198,6 +198,4 @@ class HomeSwiftControllerViewController: UIViewController {
 
     }
 
-
-
 }

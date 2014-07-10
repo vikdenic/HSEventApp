@@ -89,7 +89,7 @@ class InvitesSwiftViewController: UIViewController, UITableViewDelegate, UITable
             }
             })
 
-        var file: PFfile! = event.objectForKey("themeImage") as PFFile
+        var file: PFFile! = event.objectForKey("themeImage") as PFFile
         file.getDataInBackgroundWithBlock({data, error in
             var image = UIImage(data: data)
             cell.themeImageView.image = image

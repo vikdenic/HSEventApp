@@ -114,6 +114,7 @@
 		93CE89051961399D007BA434 /* IdeasViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CE89041961399D007BA434 /* IdeasViewController.m */; };
 		93CE890819613D15007BA434 /* IdeasTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CE890719613D15007BA434 /* IdeasTableViewCell.m */; };
 		93FE65D9196DBDAE00A1D449 /* HomeSwiftControllerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93FE65D8196DBDAD00A1D449 /* HomeSwiftControllerViewController.swift */; };
+		9BB1109A196E2285009CB789 /* InvitesSwiftViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BB11099196E2285009CB789 /* InvitesSwiftViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -308,6 +309,7 @@
 		93CE890719613D15007BA434 /* IdeasTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IdeasTableViewCell.m; sourceTree = "<group>"; };
 		93FE65D7196DBDAD00A1D449 /* With_v0-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "With_v0-Bridging-Header.h"; sourceTree = "<group>"; };
 		93FE65D8196DBDAD00A1D449 /* HomeSwiftControllerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeSwiftControllerViewController.swift; sourceTree = "<group>"; };
+		9BB11099196E2285009CB789 /* InvitesSwiftViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InvitesSwiftViewController.swift; path = ../InvitesSwiftViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -376,6 +378,7 @@
 				60694165195FD98F00C8310F /* InvitesButton.m */,
 				60A7DADC195E32BA003258F0 /* InvitesViewController.h */,
 				60A7DADD195E32BA003258F0 /* InvitesViewController.m */,
+				9BB11099196E2285009CB789 /* InvitesSwiftViewController.swift */,
 				60C7208C194F689400ADE5DF /* PageViewController.h */,
 				60C7208D194F689400ADE5DF /* PageViewController.m */,
 				607E90EA19565E8D006F88C8 /* IndividualEventPhoto.h */,
@@ -836,6 +839,7 @@
 				93952FC4194D6BEA001AA3E4 /* HomeViewController.m in Sources */,
 				60F5B34C1957555E00A80467 /* ExploreAnnotation.m in Sources */,
 				6050D51F1962FB60008AAF8F /* IndividualEventInvitePeopleViewController.m in Sources */,
+				9BB1109A196E2285009CB789 /* InvitesSwiftViewController.swift in Sources */,
 				606DAE4019624D83003F3AAE /* LikeListViewController.m in Sources */,
 				609FDC71195F4CBB00EF7C5B /* InvitePeopleTableViewCell.m in Sources */,
 				93CE89051961399D007BA434 /* IdeasViewController.m in Sources */,

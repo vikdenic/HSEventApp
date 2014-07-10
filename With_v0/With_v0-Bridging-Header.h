@@ -8,6 +8,9 @@
 #import "IndividualEventViewController.h"
 #import "PageViewController.h"
 #import "LoginViewController.h"
+#import "InvitesViewController.h"
+#import "InvitesTableViewCell.h"
+#import "InvitesButton.h"
 
 #import "UITabBarController+hidable.h"
 

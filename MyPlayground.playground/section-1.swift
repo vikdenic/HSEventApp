@@ -2,25 +2,29 @@
 
 import UIKit
 
-var str = "Hello, playground"
+//var str = "Hello, playground"
 
-var array: NSArray = [NSInteger]()
+//var array: NSArray = [Int]()
+//
+//array += 7
+//
+//array += 8
+//
+//array
+//
+//
+//
+//var anotherArray = [Int]()
+//
+//anotherArray += array
+//
+//anotherArray += anotherArray
+//
+//anotherArray
 
-array. 7
+var str = "Hi"
 
-array += 8
-
-array
-
-
-
-var anotherArray = [Int]()
-
-anotherArray += array
-
-anotherArray += anotherArray
-
-anotherArray
+str
 
 
 

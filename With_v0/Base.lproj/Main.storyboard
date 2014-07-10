@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6185.7" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="gDr-xG-KPT">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6185.7" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="gDr-xG-KPT">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6181.2"/>
     </dependencies>
@@ -130,10 +130,10 @@
             </objects>
             <point key="canvasLocation" x="1307" y="-1312"/>
         </scene>
-        <!--Invites View Controller-->
+        <!--Invites Swift View Controller-->
         <scene sceneID="oj1-d6-GY2">
             <objects>
-                <viewController id="Vdk-Mo-UU7" customClass="InvitesViewController" sceneMemberID="viewController">
+                <viewController id="Vdk-Mo-UU7" customClass="InvitesSwiftViewController" customModule="With_v0" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="aK9-6i-BrE"/>
                         <viewControllerLayoutGuide type="bottom" id="eGL-q9-eRF"/>
@@ -239,7 +239,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <connections>
-                        <outlet property="tableView" destination="256-Lm-tT8" id="Lug-SQ-m6A"/>
+                        <outlet property="tableView" destination="256-Lm-tT8" id="eoL-27-apa"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tnZ-Ut-4MM" userLabel="First Responder" sceneMemberID="firstResponder"/>

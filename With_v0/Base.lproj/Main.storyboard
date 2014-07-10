@@ -1392,10 +1392,10 @@
             </objects>
             <point key="canvasLocation" x="3554" y="-2274"/>
         </scene>
-        <!--Explore View Controller-->
+        <!--Explore Swift View Controller-->
         <scene sceneID="upb-6q-sMu">
             <objects>
-                <viewController id="5Xw-tn-va0" customClass="ExploreViewController" sceneMemberID="viewController">
+                <viewController id="5Xw-tn-va0" customClass="ExploreSwiftViewController" customModule="With_v0" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="2f8-01-Uie"/>
                         <viewControllerLayoutGuide type="bottom" id="OH7-HB-5Ze"/>
@@ -1404,12 +1404,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="3Gp-2c-87z">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="519"/>
-                                <connections>
-                                    <outlet property="delegate" destination="5Xw-tn-va0" id="pEh-UQ-5iX"/>
-                                </connections>
-                            </mapView>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="y7M-bf-toX">
                                 <rect key="frame" x="20" y="188" width="286" height="143"/>
                                 <subviews>
@@ -1471,17 +1465,24 @@
                                 </subviews>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="3Gp-2c-87z">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="519"/>
+                                <connections>
+                                    <outlet property="delegate" destination="5Xw-tn-va0" id="pEh-UQ-5iX"/>
+                                </connections>
+                            </mapView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="Ryb-av-bUZ"/>
                     <connections>
-                        <outlet property="dateLabel" destination="cT5-k3-etz" id="wUB-WX-UuK"/>
+                        <outlet property="dateLabel" destination="cT5-k3-etz" id="4RQ-y9-4hi"/>
                         <outlet property="eventImageView" destination="gwy-Bw-QLg" id="MjC-sV-lnt"/>
-                        <outlet property="individualEventView" destination="y7M-bf-toX" id="wkE-gF-ZM3"/>
-                        <outlet property="locationLabel" destination="1ya-f3-qqI" id="xD8-kc-nuf"/>
-                        <outlet property="mapView" destination="3Gp-2c-87z" id="wnz-q3-3qB"/>
-                        <outlet property="titleLabel" destination="h3H-rD-iFT" id="qrW-v4-x4x"/>
+                        <outlet property="imageView" destination="gwy-Bw-QLg" id="3NM-5F-gyU"/>
+                        <outlet property="individualEventView" destination="y7M-bf-toX" id="p5w-fG-1v1"/>
+                        <outlet property="locationLabel" destination="1ya-f3-qqI" id="CAi-Dl-B1w"/>
+                        <outlet property="mapView" destination="3Gp-2c-87z" id="ICZ-sz-Thi"/>
+                        <outlet property="titleLabel" destination="h3H-rD-iFT" id="pVB-Nd-sGi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="398-e9-wTk" userLabel="First Responder" sceneMemberID="firstResponder"/>

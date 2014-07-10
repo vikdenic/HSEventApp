@@ -10,7 +10,7 @@
 #import <Parse/Parse.h>
 #import <MapKit/MapKit.h>
 #import "ExploreEventAnnotationView.h"
-#import "ExploreAnnotation.h"
+//#import "ExploreAnnotation.h"
 #import "IndividualEventViewController.h"
 
 @interface ExploreViewController () <CLLocationManagerDelegate, MKMapViewDelegate>
@@ -72,60 +72,60 @@
     [self.locationManager startUpdatingLocation];
 }
 
-- (void)queryForEvents: (PFGeoPoint *)userGeoPoint
-{
-
-
-    //need to make this so user can search around and also see events not around their current location?
-
-    PFQuery *query = [PFQuery queryWithClassName:@"Event"];
-
-    [query includeKey:@"creator"]; //
-
-    [query whereKey:@"locationGeoPoint" nearGeoPoint:userGeoPoint withinMiles:20];
-    query.cachePolicy = kPFCachePolicyCacheThenNetwork;
-    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
-     {
-         [self.eventObjects addObjectsFromArray:objects];
-
-         for (PFObject *object in self.eventObjects)
-         {
-             ExploreAnnotation *exploreAnnotation = [[ExploreAnnotation alloc] init];
-
-             exploreAnnotation.geoPoint = [object objectForKey:@"locationGeoPoint"];
-             exploreAnnotation.coordinate = CLLocationCoordinate2DMake(exploreAnnotation.geoPoint.latitude, exploreAnnotation.geoPoint.longitude);
-             exploreAnnotation.title = [object objectForKey:@"title"];
-             exploreAnnotation.details = [object objectForKey:@"details"];
-             exploreAnnotation.object = object;
-             exploreAnnotation.creator = [object objectForKey:@"creator"];
-             exploreAnnotation.location = [object objectForKey:@"location"];
-             exploreAnnotation.date = [object objectForKey:@"eventDate"];
-
-             exploreAnnotation.creatorImageFile = [[object objectForKey:@"creator"]objectForKey:@"userProfilePhoto"];
-
-             [exploreAnnotation.creatorImageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
-
-                 exploreAnnotation.creatorImage = [UIImage imageWithData:data];
-
-                 [self.comparisonExploreAnnotationArray addObject:exploreAnnotation];
-                 [self.mapView addAnnotation:exploreAnnotation];
-                 
-             }];
-             
-             exploreAnnotation.themeFile = [object objectForKey:@"mapThemeImage"];
-             [exploreAnnotation.themeFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
-
-                 exploreAnnotation.themeImage = [UIImage imageWithData:data];
-
-                 [self.comparisonExploreAnnotationArray addObject:exploreAnnotation];
-                 [self.mapView addAnnotation:exploreAnnotation];
-
-             }];
-
-//             [self.mapView addAnnotation:exploreAnnotation];
-         }
-     }];
-}
+//- (void)queryForEvents: (PFGeoPoint *)userGeoPoint
+//{
+//
+//
+//    //need to make this so user can search around and also see events not around their current location?
+//
+//    PFQuery *query = [PFQuery queryWithClassName:@"Event"];
+//
+//    [query includeKey:@"creator"]; //
+//
+//    [query whereKey:@"locationGeoPoint" nearGeoPoint:userGeoPoint withinMiles:20];
+//    query.cachePolicy = kPFCachePolicyCacheThenNetwork;
+//    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+//     {
+//         [self.eventObjects addObjectsFromArray:objects];
+//
+//         for (PFObject *object in self.eventObjects)
+//         {
+//             ExploreAnnotation *exploreAnnotation = [[ExploreAnnotation alloc] init];
+//
+//             exploreAnnotation.geoPoint = [object objectForKey:@"locationGeoPoint"];
+//             exploreAnnotation.coordinate = CLLocationCoordinate2DMake(exploreAnnotation.geoPoint.latitude, exploreAnnotation.geoPoint.longitude);
+//             exploreAnnotation.title = [object objectForKey:@"title"];
+//             exploreAnnotation.details = [object objectForKey:@"details"];
+//             exploreAnnotation.object = object;
+//             exploreAnnotation.creator = [object objectForKey:@"creator"];
+//             exploreAnnotation.location = [object objectForKey:@"location"];
+//             exploreAnnotation.date = [object objectForKey:@"eventDate"];
+//
+//             exploreAnnotation.creatorImageFile = [[object objectForKey:@"creator"]objectForKey:@"userProfilePhoto"];
+//
+//             [exploreAnnotation.creatorImageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+//
+//                 exploreAnnotation.creatorImage = [UIImage imageWithData:data];
+//
+//                 [self.comparisonExploreAnnotationArray addObject:exploreAnnotation];
+//                 [self.mapView addAnnotation:exploreAnnotation];
+//                 
+//             }];
+//             
+//             exploreAnnotation.themeFile = [object objectForKey:@"mapThemeImage"];
+//             [exploreAnnotation.themeFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+//
+//                 exploreAnnotation.themeImage = [UIImage imageWithData:data];
+//
+//                 [self.comparisonExploreAnnotationArray addObject:exploreAnnotation];
+//                 [self.mapView addAnnotation:exploreAnnotation];
+//
+//             }];
+//
+////             [self.mapView addAnnotation:exploreAnnotation];
+//         }
+//     }];
+//}
 
 -(void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
@@ -143,9 +143,16 @@
 
     [self queryForEvents:userGeoPoint];
 
-    [self performSelector:@selector(delayForZoom)
-               withObject:nil
-               afterDelay:1.3];
+//    [self performSelector:@selector(delayForZoom)
+//               withObject:nil
+//               afterDelay:1.3];
+
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [NSThread sleepForTimeInterval:1.3];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self delayForZoom];
+        });
+    });
 }
 
 - (void)delayForZoom

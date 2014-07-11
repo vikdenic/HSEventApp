@@ -121,7 +121,44 @@ class ExploreSwiftViewController: UIViewController, CLLocationManagerDelegate, M
 
         annotationView.image = exploreAnnotation.creatorImage
 
+        annotationView.frame = CGRectMake(0, 0, 70, 70)
+
+        annotationView.contentMode = UIViewContentMode.ScaleAspectFill
+        annotationView.layer.cornerRadius = 35
+        annotationView.clipsToBounds = true
+        annotationView.layer.borderColor = UIColor(red: 202/255.0, green: 250/255.0, blue: 53/255.0, alpha: 1).CGColor
+        annotationView.layer.borderWidth = 2.0
+
+        annotationView.geoPoint = exploreAnnotation.geoPoint
+
+        if annotationView.gestureRecognizers.count == 0
+        {
+            let tapping = UITapGestureRecognizer(target: self, action: "tapTap")
+            tapping.numberOfTapsRequired = 2
+            annotationView.addGestureRecognizer(tapping)
+            annotationView.userInteractionEnabled = true
+        }
+
         return annotationView
+    }
+
+    func tapTap(tapGestureRecognizer: UITapGestureRecognizer)
+    {
+        let annotationView = tapGestureRecognizer.view as ExploreEventAnnotationView
+
+        individualEventView.hidden = false
+
+        for exploreAnnotation in comparisonExploreAnnotationArray
+        {
+            if annotationView == exploreAnnotation.geoPoint
+            {
+                titleLabel.text = exploreAnnotation.title
+                dateLabel.text = exploreAnnotation.date
+                locationLabel.text = exploreAnnotation.location
+                imageView.image = exploreAnnotation.themeImage
+                eventObject = exploreAnnotation.object
+            }
+        }
     }
 
     func delayForZoom()
@@ -140,8 +177,24 @@ class ExploreSwiftViewController: UIViewController, CLLocationManagerDelegate, M
     func theMapTap(tapGestureRecognizer: UITapGestureRecognizer)
     {
         individualEventView.hidden = true
-
     }
+
+    @IBAction func onExitButtonPressedExit(sender: AnyObject)
+    {
+        individualEventView.hidden = true
+    }
+
+    override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!)
+    {
+        if segue.identifier == "FromExploreToIndividualSegue"
+        {
+            let individualEventVC = segue.destinationViewController as IndividualEventViewController
+            individualEventVC.eventObject = eventObject
+        }
+    }
+
+
+
 
 
 }

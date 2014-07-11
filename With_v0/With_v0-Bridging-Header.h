@@ -11,6 +11,10 @@
 #import "InvitesViewController.h"
 #import "InvitesTableViewCell.h"
 #import "InvitesButton.h"
+#import "IndividualEventViewController.h"
+#import "ExploreEventAnnotationView.h"
+#import "ExploreAnnotation.h"
+
 
 #import "UITabBarController+hidable.h"
 

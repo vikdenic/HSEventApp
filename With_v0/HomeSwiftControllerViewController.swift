@@ -96,6 +96,7 @@ class HomeSwiftControllerViewController: UIViewController, UIScrollViewDelegate,
         if currentUser
         {
             queryForEvents()
+            println(eventArray)
         }
         else
         {
@@ -103,7 +104,8 @@ class HomeSwiftControllerViewController: UIViewController, UIScrollViewDelegate,
         }
 
         var refreshControl2 = UIRefreshControl()
-        refreshControl2.addTarget(self, action: "refresh", forControlEvents: UIControlEvents.ValueChanged)
+//        refreshControl2.addTarget(self, action: "refresh", forControlEvents: UIControlEvents.ValueChanged)
+        refreshControl2.addTarget(self, action: Selector("refresh") , forControlEvents: UIControlEvents.ValueChanged)
 
         refreshControl = refreshControl2
         tableView.addSubview(refreshControl)
@@ -129,7 +131,7 @@ class HomeSwiftControllerViewController: UIViewController, UIScrollViewDelegate,
     func refresh(refreshControl : UIRefreshControl) -> Void
     {
         queryForEvents()
-        var timer = NSTimer.scheduledTimerWithTimeInterval(1.5, target: self, selector: "stopRefresh", userInfo: nil, repeats: false)
+//        var timer = NSTimer.scheduledTimerWithTimeInterval(1.5, target: self, selector: "stopRefresh", userInfo: nil, repeats: false)
     }
 
     func stopRefresh() -> Void
@@ -156,11 +158,17 @@ class HomeSwiftControllerViewController: UIViewController, UIScrollViewDelegate,
         query.findObjectsInBackgroundWithBlock({objects,error in
             self.doingTheQuery = true
 
+            println(objects)
 
             if self.eventArray.count < 3
             {
+                for object in objects
+                {
+                    println(" object in for loop \(object)")
+                    self.eventArray += object as PFObject
+                }
                 //*NSLOG THIS TO MAKE SURE IT WORKS
-                self.eventArray.appendNSArray(objects)
+//                self.eventArray.appendNSArray(objects)
 
                 self.tableView.reloadData()
             }
@@ -182,6 +190,7 @@ class HomeSwiftControllerViewController: UIViewController, UIScrollViewDelegate,
                 self.tableView.reloadData()
             }
             self.doingTheQuery = false
+//            self.stopRefresh()
         })
     }
 
@@ -265,9 +274,9 @@ class HomeSwiftControllerViewController: UIViewController, UIScrollViewDelegate,
             }
         })
 
-        var userName : PFObject = object.objectForKey("creator").objectForKey("username") as PFObject
+        var userName = object.objectForKey("creator").objectForKey("username") as String
 
-        cell.creatorNameLabel.text = "\(userName)"
+        cell.creatorNameLabel.text = userName
         cell.eventNameLabel.text = object.objectForKey("title") as String
         cell.eventDateLabel.text = object.objectForKey("eventDate") as String
         cell.accessoryType = UITableViewCellAccessoryType.None

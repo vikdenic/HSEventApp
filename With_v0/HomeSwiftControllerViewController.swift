@@ -45,13 +45,16 @@ extension Array{
     }
 }
 
-class HomeSwiftControllerViewController: UIViewController {
+class HomeSwiftControllerViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource {
 //    var tableView : UITableView?
 
     @IBOutlet var tableView: UITableView
-    var refreshControl: UIRefreshControl?
+    var refreshControl: UIRefreshControl = UIRefreshControl()
     var eventArray = [PFObject]()
     var indexPathArray = [NSIndexPath]()
+    var startContentOffset = CGFloat()
+    var lastContentOffset = CGFloat()
+    var hidden = Bool()
 //    var eventArray = [AnyObject]()
 
     var doingTheQuery : Bool = false
@@ -78,81 +81,49 @@ class HomeSwiftControllerViewController: UIViewController {
             loginVC.hidesBottomBarWhenPushed = true
         }
     }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        var testUser :PFUser? = PFUser.currentUser()
+        originalFrame = self.tabBarController.tabBar.frame
 
-        if testUser
+        let limeGreen : UIColor = UIColor(red: 202/255.0, green: 250/255.0, blue: 53/255.0, alpha: 1)
+
+        tabBarController.tabBar.tintColor = UIColor.greenColor()
+
+        var currentUser : PFUser? = PFUser.currentUser()
+
+        if currentUser
         {
-            println(testUser)
+            queryForEvents()
         }
-        else{
-            println("It was nil yo")
+        else
+        {
+            performSegueWithIdentifier("showLogin", sender: self)
         }
     }
-//    - (void)refresh:(UIRefreshControl *)refreshControl
-//    {
-//    [self queryForEvents];
-//    [self performSelector:@selector(stopRefresh) withObject:nil afterDelay:2.0];
-//    }
-//
-//    - (void)stopRefresh
-//    {
-//    [self.refreshControl endRefreshing];
-//    }
 
-//*    func refresh(refreshControl: UIRefreshControl) {
-//        queryForEvents
-//        
-//    }
-//
-//    - (void)queryForEvents
-//    {
-//
-//    PFRelation *relation = [[PFUser currentUser] relationForKey:@"eventsAttending"];
-//    PFQuery *query = [relation query];
-//    [query includeKey:@"creator"];
-//    query.limit = 4;
-//
-//    if (self.eventArray.count == 0)
-//    {
-//    query.skip = 0;
-//
-//    } else
-//    {
-//    query.skip = self.eventArray.count;
-//    }
-//    //  query.cachePolicy = kPFCachePolicyCacheThenNetwork;
-//    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
-//    {
-//    self.doingTheQuery = YES;
-//
-//    if (self.eventArray.count < 3)
-//    {
-//    [self.eventArray addObjectsFromArray:objects];
-//    [self.tableView reloadData];
-//
-//    } else if (self.eventArray.count >= 3)
-//    {
-//    int theCount = (int)self.eventArray.count;
-//    [self.eventArray addObjectsFromArray:objects];
-//
-//    for (int i = theCount; i <= self.eventArray.count-1; i++)
-//    {
-//    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
-//    [self.indexPathArray addObject:indexPath];
-//    }
-//
-//    [self.tableView insertRowsAtIndexPaths:self.indexPathArray withRowAnimation:UITableViewRowAnimationFade];
-//    [self.indexPathArray removeAllObjects];
-//    ///
-//    [self.tableView reloadData];
-//    }
-//    self.doingTheQuery = NO;
-//    }];
-//    }
+    //NSNotificationCenter
+    func receiveNotification(notification : NSNotification) -> Void
+    {
+        if notification.name == "Test1"
+        {
+            eventArray.removeAll(keepCapacity: false)
+            tableView.reloadData()
+        }
+    }
 
+    //PULL TO REFRESH
+    func refresh(refreshControl : UIRefreshControl) -> Void
+    {
+        queryForEvents()
+        var timer = NSTimer.scheduledTimerWithTimeInterval(1.5, target: self, selector: "stopRefresh", userInfo: nil, repeats: false)
+    }
+
+    func stopRefresh() -> Void
+    {
+        refreshControl.endRefreshing()
+    }
 
     func queryForEvents()->Void
     {
@@ -192,10 +163,98 @@ class HomeSwiftControllerViewController: UIViewController {
                     var indexPath = NSIndexPath(forItem: i, inSection: 0)
                     self.indexPathArray += indexPath
                 }
+
+                self.tableView.insertRowsAtIndexPaths(self.indexPathArray, withRowAnimation:UITableViewRowAnimation.Fade)
+                self.indexPathArray.removeAll(keepCapacity: false)
+
+                self.tableView.reloadData()
             }
-
+            self.doingTheQuery = false
         })
-
     }
 
+    //TableView
+    func tableView(tableView: UITableView!, numberOfRowsInSection section: Int) -> Int
+    {
+    }
+
+
+
+
+    //ScrollStuff
+    //the magic!
+    func expand()
+    {
+        if hidden
+        {
+        return
+        }
+
+        hidden = true
+
+        tabBarController .setTabBarHidden(true, animated: true)
+        navigationController .setNavigationBarHidden(false, animated: true)
+    }
+
+    func contract()
+    {
+        if !hidden
+        {
+            return
+        }
+
+        hidden = false
+
+        tabBarController.setTabBarHidden(false, animated: true)
+        navigationController .setNavigationBarHidden(false, animated: true)
+    }
+
+    //ScrollViewDelegate
+    func scrollViewWillBeginDragging(scrollView: UIScrollView!)
+    {
+        startContentOffset = lastContentOffset
+
+        lastContentOffset = scrollView.contentOffset.y
+    }
+
+    func scrollViewDidScroll(scrollView: UIScrollView!)
+    {
+        var currentOffset : CGFloat = scrollView.contentOffset.y
+        var differenceFromStart : CGFloat = startContentOffset - currentOffset
+        var differenceFromLast : CGFloat = lastContentOffset - currentOffset
+        lastContentOffset = currentOffset
+
+        if differenceFromStart < 0
+        {
+            if scrollView.tracking && abs(differenceFromLast)>1
+            {
+                expand()
+            }
+        }
+        else
+        {
+            if scrollView.tracking && abs(differenceFromLast)>1
+            {
+                contract()
+            }
+        }
+    }
+
+    func scrollViewDidEndDragging(scrollView: UIScrollView!, willDecelerate decelerate: Bool)
+    {
+    }
+
+    func scrollViewDidEndDecelerating(scrollView: UIScrollView!)
+    {
+    }
+
+    func scrollViewShouldScrollToTop(scrollView: UIScrollView!) -> Bool
+    {
+    }
+
+
 }
+
+
+
+

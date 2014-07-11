@@ -5,36 +5,36 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>B4D21325-81AF-4F87-B330-3A872BE02031</string>
+	<string>4816275F-970C-448E-9203-FF143D716FEE</string>
 	<key>IDESourceControlProjectName</key>
 	<string>With_v0</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>77894F37-F836-4D00-BCEB-0481A0D4BE94</key>
-		<string>https://github.com/vikdenic/With_v0.git</string>
+		<key>881FA1F5-9B1D-4449-A335-39664D82CF80</key>
+		<string>https://github.com/vikdenic/HSEventApp.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>With_v0.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>77894F37-F836-4D00-BCEB-0481A0D4BE94</key>
+		<key>881FA1F5-9B1D-4449-A335-39664D82CF80</key>
 		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/vikdenic/With_v0.git</string>
+	<string>https://github.com/vikdenic/HSEventApp.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>77894F37-F836-4D00-BCEB-0481A0D4BE94</string>
+	<string>881FA1F5-9B1D-4449-A335-39664D82CF80</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>77894F37-F836-4D00-BCEB-0481A0D4BE94</string>
+			<string>881FA1F5-9B1D-4449-A335-39664D82CF80</string>
 			<key>IDESourceControlWCCName</key>
-			<string>With_v0</string>
+			<string>HSEventApp</string>
 		</dict>
 	</array>
 </dict>

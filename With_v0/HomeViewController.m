@@ -38,6 +38,7 @@
     BOOL hidden;
 }
 
+//CONVERTED
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -76,6 +77,7 @@
     [[self navigationItem] setBackBarButtonItem:newBackButton];
 }
 
+//CONVERTED
 -(void)receiveNotification:(NSNotification *) notification
 {
     if ([[notification name] isEqualToString:@"Test1"])
@@ -86,13 +88,14 @@
     }
 }
 
+//CONVERTED
 -(void)viewWillAppear:(BOOL)animated
 {
     self.tabBarController.tabBar.hidden = NO;
 }
 
 #pragma mark - The Magic!
-
+//CONVERTED
 -(void)expand
 {
     if(hidden)
@@ -107,6 +110,7 @@
                                              animated:YES];
 }
 
+//CONVERTED
 -(void)contract
 {
     if(!hidden)
@@ -124,12 +128,14 @@
 #pragma mark -
 #pragma mark UIScrollViewDelegate Methods
 
+//CONVERTED
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
     startContentOffset = lastContentOffset = scrollView.contentOffset.y;
     //NSLog(@"scrollViewWillBeginDragging: %f", scrollView.contentOffset.y);
 }
 
+//CONVERTED
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     CGFloat currentOffset = scrollView.contentOffset.y;
@@ -152,14 +158,16 @@
 
 }
 
+//CONVERTED
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
 }
 
+//CONVERTED
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
 }
-
+//CONVERTED
 - (BOOL)scrollViewShouldScrollToTop:(UIScrollView *)scrollView
 {
     [self contract];
@@ -207,12 +215,13 @@
 //}
 
 #pragma mark - Table View
-
+//CONVERTED
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return self.eventArray.count;
 }
 
+//* NEED TO FIGURE OUT DISPATCH STUFF
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     HomeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
@@ -290,13 +299,14 @@
     return cell;
 }
 
+//CONVERTED
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 #pragma mark - Query for Events
-
+//CONVERTED
 - (void)queryForEvents
 {
 
@@ -345,12 +355,14 @@
 
 #pragma mark - Pull To Refresh
 
+//CONVERTED
 - (void)refresh:(UIRefreshControl *)refreshControl
 {
     [self queryForEvents];
     [self performSelector:@selector(stopRefresh) withObject:nil afterDelay:2.0];
 }
 
+//CONVERTED
 - (void)stopRefresh
 {
     [self.refreshControl endRefreshing];
@@ -358,6 +370,7 @@
 
 #pragma mark - Segue
 
+//CONVERTED
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"ToPageViewControllerSegue"])

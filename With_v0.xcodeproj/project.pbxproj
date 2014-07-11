@@ -310,7 +310,6 @@
 		93CE89041961399D007BA434 /* IdeasViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IdeasViewController.m; sourceTree = "<group>"; };
 		93CE890619613D15007BA434 /* IdeasTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IdeasTableViewCell.h; sourceTree = "<group>"; };
 		93CE890719613D15007BA434 /* IdeasTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IdeasTableViewCell.m; sourceTree = "<group>"; };
-		93F9FB2C196DCCD9000AB487 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = MyPlayground.playground; path = ../MyPlayground.playground; sourceTree = "<group>"; };
 		93FE65D7196DBDAD00A1D449 /* With_v0-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "With_v0-Bridging-Header.h"; sourceTree = "<group>"; };
 		93FE65D8196DBDAD00A1D449 /* HomeSwiftControllerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeSwiftControllerViewController.swift; sourceTree = "<group>"; };
 		9BB11099196E2285009CB789 /* InvitesSwiftViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InvitesSwiftViewController.swift; path = ../InvitesSwiftViewController.swift; sourceTree = "<group>"; };
@@ -373,7 +372,7 @@
 		60A7DAD3195E2FBE003258F0 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				93F9FB2C196DCCD9000AB487 /* MyPlayground.playground */,
+				93FE65D7196DBDAD00A1D449 /* With_v0-Bridging-Header.h */,
 				60F47AB0194E5223007422E7 /* HomeTableViewCell.h */,
 				60F47AB1194E5223007422E7 /* HomeTableViewCell.m */,
 				93952FC2194D6BEA001AA3E4 /* HomeViewController.h */,

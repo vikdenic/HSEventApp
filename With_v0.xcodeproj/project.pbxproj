@@ -117,6 +117,7 @@
 		9BB1109A196E2285009CB789 /* InvitesSwiftViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BB11099196E2285009CB789 /* InvitesSwiftViewController.swift */; };
 		9BB1109E196F1100009CB789 /* ExploreSwiftViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BB1109D196F1100009CB789 /* ExploreSwiftViewController.swift */; };
 		9BB110A0196F3D32009CB789 /* ExploreAnnotationSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BB1109F196F3D32009CB789 /* ExploreAnnotationSwift.swift */; };
+		9BB110A219703687009CB789 /* ExploreEventAnnotationViewSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BB110A119703687009CB789 /* ExploreEventAnnotationViewSwift.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -315,6 +316,7 @@
 		9BB11099196E2285009CB789 /* InvitesSwiftViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InvitesSwiftViewController.swift; path = ../InvitesSwiftViewController.swift; sourceTree = "<group>"; };
 		9BB1109D196F1100009CB789 /* ExploreSwiftViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExploreSwiftViewController.swift; path = ../ExploreSwiftViewController.swift; sourceTree = "<group>"; };
 		9BB1109F196F3D32009CB789 /* ExploreAnnotationSwift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExploreAnnotationSwift.swift; path = ../ExploreAnnotationSwift.swift; sourceTree = "<group>"; };
+		9BB110A119703687009CB789 /* ExploreEventAnnotationViewSwift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExploreEventAnnotationViewSwift.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -451,6 +453,7 @@
 				9BB1109F196F3D32009CB789 /* ExploreAnnotationSwift.swift */,
 				60F5B3441957537200A80467 /* ExploreEventAnnotationView.h */,
 				60F5B3451957537200A80467 /* ExploreEventAnnotationView.m */,
+				9BB110A119703687009CB789 /* ExploreEventAnnotationViewSwift.swift */,
 			);
 			name = Explore;
 			sourceTree = "<group>";
@@ -813,6 +816,7 @@
 				60B954531959C95900AE363D /* PeopleAttendingEventViewController.m in Sources */,
 				606DAE371961FA1E003F3AAE /* StreamProfileFriendListViewController.m in Sources */,
 				930D1913195886DC00AE4AE1 /* GKCropBorderView.m in Sources */,
+				9BB110A219703687009CB789 /* ExploreEventAnnotationViewSwift.swift in Sources */,
 				6091D1F4195B28F6001A371E /* PendingFriendRequestsCustomTableViewCell.m in Sources */,
 				60C72097194FAFC200ADE5DF /* StreamTableViewCell.m in Sources */,
 				608B6C9E1950FF51007D4503 /* CommentsViewController.m in Sources */,

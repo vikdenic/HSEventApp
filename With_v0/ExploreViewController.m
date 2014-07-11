@@ -1,279 +1,279 @@
+////
+////  ExploreViewController.m
+////  With_v0
+////
+////  Created by Vik Denic on 6/15/14.
+////  Copyright (c) 2014 Mobile Makers. All rights reserved.
+////
 //
-//  ExploreViewController.m
-//  With_v0
+//#import "ExploreViewController.h"
+//#import <Parse/Parse.h>
+//#import <MapKit/MapKit.h>
+//#import "ExploreEventAnnotationView.h"
+////#import "ExploreAnnotation.h"
+//#import "IndividualEventViewController.h"
 //
-//  Created by Vik Denic on 6/15/14.
-//  Copyright (c) 2014 Mobile Makers. All rights reserved.
+//@interface ExploreViewController () <CLLocationManagerDelegate, MKMapViewDelegate>
 //
-
-#import "ExploreViewController.h"
-#import <Parse/Parse.h>
-#import <MapKit/MapKit.h>
-#import "ExploreEventAnnotationView.h"
-//#import "ExploreAnnotation.h"
-#import "IndividualEventViewController.h"
-
-@interface ExploreViewController () <CLLocationManagerDelegate, MKMapViewDelegate>
-
-@property (weak, nonatomic) IBOutlet MKMapView *mapView;
-@property CLLocationManager *locationManager;
-@property CLLocation *location;
-
-@property NSMutableArray *eventObjects;
-@property NSMutableArray *comparisonExploreAnnotationArray;
-
-//pop up view
-@property (weak, nonatomic) IBOutlet UIView *individualEventView;
-@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
-@property (weak, nonatomic) IBOutlet UILabel *dateLabel;
-@property (weak, nonatomic) IBOutlet UILabel *locationLabel;
-@property (weak, nonatomic) IBOutlet UITextView *detailsTextView;
-@property (weak, nonatomic) IBOutlet UIImageView *eventImageView;
-
-@end
-
-@implementation ExploreViewController
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-
-
-    UITapGestureRecognizer *mapTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(theMapTap:)];
-        mapTap.numberOfTapsRequired = 1;
-        [self.mapView addGestureRecognizer:mapTap];
-        self.mapView.userInteractionEnabled = YES;
-
-//    UIPanGestureRecognizer *mapTap2 = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(theMapTap2:)];
-//    mapTap2.minimumNumberOfTouches = 1;
-//    [self.mapView addGestureRecognizer:mapTap2];
-
-    self.eventObjects = [NSMutableArray array];
-    self.comparisonExploreAnnotationArray = [NSMutableArray array];
-
-    self.individualEventView.hidden = YES;
-
-    self.navigationController.navigationBarHidden = YES;
-
-    //user double clicks and event and a uiview pops up and bounces like on ifunny that shows the user all the info about the event and they can click buttons like going or no and see the address and all that and can click a button that will take them to the actual event page
-
-    //in the view - title, details, number of people and pic for now?
-
-}
-
--(void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-
-    self.locationManager = [[CLLocationManager alloc] init];
-    self.locationManager.delegate = self;
-    self.locationManager.distanceFilter = kCLDistanceFilterNone;
-    self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-    [self.locationManager startUpdatingLocation];
-}
-
-//- (void)queryForEvents: (PFGeoPoint *)userGeoPoint
+//@property (weak, nonatomic) IBOutlet MKMapView *mapView;
+//@property CLLocationManager *locationManager;
+//@property CLLocation *location;
+//
+//@property NSMutableArray *eventObjects;
+//@property NSMutableArray *comparisonExploreAnnotationArray;
+//
+////pop up view
+//@property (weak, nonatomic) IBOutlet UIView *individualEventView;
+//@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+//@property (weak, nonatomic) IBOutlet UILabel *dateLabel;
+//@property (weak, nonatomic) IBOutlet UILabel *locationLabel;
+//@property (weak, nonatomic) IBOutlet UITextView *detailsTextView;
+//@property (weak, nonatomic) IBOutlet UIImageView *eventImageView;
+//
+//@end
+//
+//@implementation ExploreViewController
+//
+//- (void)viewDidLoad
 //{
+//    [super viewDidLoad];
 //
 //
-//    //need to make this so user can search around and also see events not around their current location?
+//    UITapGestureRecognizer *mapTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(theMapTap:)];
+//        mapTap.numberOfTapsRequired = 1;
+//        [self.mapView addGestureRecognizer:mapTap];
+//        self.mapView.userInteractionEnabled = YES;
 //
-//    PFQuery *query = [PFQuery queryWithClassName:@"Event"];
+////    UIPanGestureRecognizer *mapTap2 = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(theMapTap2:)];
+////    mapTap2.minimumNumberOfTouches = 1;
+////    [self.mapView addGestureRecognizer:mapTap2];
 //
-//    [query includeKey:@"creator"]; //
+//    self.eventObjects = [NSMutableArray array];
+//    self.comparisonExploreAnnotationArray = [NSMutableArray array];
 //
-//    [query whereKey:@"locationGeoPoint" nearGeoPoint:userGeoPoint withinMiles:20];
-//    query.cachePolicy = kPFCachePolicyCacheThenNetwork;
-//    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
-//     {
-//         [self.eventObjects addObjectsFromArray:objects];
+//    self.individualEventView.hidden = YES;
 //
-//         for (PFObject *object in self.eventObjects)
-//         {
-//             ExploreAnnotation *exploreAnnotation = [[ExploreAnnotation alloc] init];
+//    self.navigationController.navigationBarHidden = YES;
 //
-//             exploreAnnotation.geoPoint = [object objectForKey:@"locationGeoPoint"];
-//             exploreAnnotation.coordinate = CLLocationCoordinate2DMake(exploreAnnotation.geoPoint.latitude, exploreAnnotation.geoPoint.longitude);
-//             exploreAnnotation.title = [object objectForKey:@"title"];
-//             exploreAnnotation.details = [object objectForKey:@"details"];
-//             exploreAnnotation.object = object;
-//             exploreAnnotation.creator = [object objectForKey:@"creator"];
-//             exploreAnnotation.location = [object objectForKey:@"location"];
-//             exploreAnnotation.date = [object objectForKey:@"eventDate"];
+//    //user double clicks and event and a uiview pops up and bounces like on ifunny that shows the user all the info about the event and they can click buttons like going or no and see the address and all that and can click a button that will take them to the actual event page
 //
-//             exploreAnnotation.creatorImageFile = [[object objectForKey:@"creator"]objectForKey:@"userProfilePhoto"];
+//    //in the view - title, details, number of people and pic for now?
 //
-//             [exploreAnnotation.creatorImageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
-//
-//                 exploreAnnotation.creatorImage = [UIImage imageWithData:data];
-//
-//                 [self.comparisonExploreAnnotationArray addObject:exploreAnnotation];
-//                 [self.mapView addAnnotation:exploreAnnotation];
-//                 
-//             }];
-//             
-//             exploreAnnotation.themeFile = [object objectForKey:@"mapThemeImage"];
-//             [exploreAnnotation.themeFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
-//
-//                 exploreAnnotation.themeImage = [UIImage imageWithData:data];
-//
-//                 [self.comparisonExploreAnnotationArray addObject:exploreAnnotation];
-//                 [self.mapView addAnnotation:exploreAnnotation];
-//
-//             }];
-//
-////             [self.mapView addAnnotation:exploreAnnotation];
-//         }
-//     }];
 //}
-
--(void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
-{
-    NSLog(@"Change your location in the simulator!!!!");
-}
-
--(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
-{
-    [self.locationManager stopUpdatingLocation];
-    [self.mapView setShowsUserLocation:YES];
-
-    self.location = [self.locationManager location];
-
-    PFGeoPoint *userGeoPoint = [PFGeoPoint geoPointWithLatitude:self.location.coordinate.latitude longitude:self.location.coordinate.longitude];
-
-    [self queryForEvents:userGeoPoint];
-
-//    [self performSelector:@selector(delayForZoom)
-//               withObject:nil
-//               afterDelay:1.3];
-
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [NSThread sleepForTimeInterval:1.3];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self delayForZoom];
-        });
-    });
-}
-
-- (void)delayForZoom
-{
-    MKCoordinateRegion mapRegion;
-    mapRegion.center = self.location.coordinate;
-    mapRegion.span.latitudeDelta = 0.10;
-    mapRegion.span.longitudeDelta = 0.10;
-    [self.mapView setRegion:mapRegion animated: YES];
-}
-
-
-#pragma mark - Map
-
-- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
-{
-    if ([annotation isKindOfClass:[MKUserLocation class]])
-        return nil;
-
-    ExploreAnnotation *exploreAnnotation = (ExploreAnnotation *)annotation;
-
-    ExploreEventAnnotationView *annotationView = [[ExploreEventAnnotationView alloc]initWithAnnotation:exploreAnnotation reuseIdentifier:nil];
-
-    //VIK: Circular annotation
-//    annotationView.image = exploreAnnotation.themeImage;
-    annotationView.image = exploreAnnotation.creatorImage;
-
-    annotationView.frame = CGRectMake(0,0,70,70);
-
-    annotationView.contentMode = UIViewContentModeScaleAspectFill;
-
-    annotationView.layer.cornerRadius = 35;
-
-
-    annotationView.clipsToBounds = YES;
-
-    annotationView.layer.borderColor = [[UIColor colorWithRed:202/255.0 green:250/255.0 blue:53/255.0 alpha:1] CGColor];
-
-    annotationView.layer.borderWidth = 2.0;
-    //
-
-    annotationView.geoPoint = exploreAnnotation.geoPoint;
-
-    ///I think you should just manipulate the actual annotation view itself in ExploreEventAnnotationView.h - add a new property
-
-    //double tap to expand?
-    if (annotationView.gestureRecognizers.count == 0)
-    {
-        UITapGestureRecognizer *tapping = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapTap:)];
-        tapping.numberOfTapsRequired = 2;
-        [annotationView addGestureRecognizer:tapping];
-        annotationView.userInteractionEnabled = YES;
-    }
-
-
-    return annotationView;
-}
-
-#pragma mark - Tap Gesture Recognizer
-
-- (void)tapTap:(UITapGestureRecognizer *)tapGestureRecognizer
-{
-
-    NSLog(@"Tap Tap Tap");
-
-    ExploreEventAnnotationView *annotationView = (ExploreEventAnnotationView *)tapGestureRecognizer.view;
-
-    self.individualEventView.hidden = NO;
-
-    for (ExploreAnnotation *exploreAnnotation in self.comparisonExploreAnnotationArray)
-    {
-        if ([annotationView.geoPoint isEqual:exploreAnnotation.geoPoint])
-    {
-
-        self.titleLabel.text = exploreAnnotation.title;
-        self.dateLabel.text = exploreAnnotation.date;
-        self.locationLabel.text = exploreAnnotation.location;
-        self.detailsTextView.text = exploreAnnotation.details;
-        //size to fit this
-
-        self.eventImageView.image = exploreAnnotation.themeImage;
-
-        self.eventObject = exploreAnnotation.object;
-    } else {
-    }
-
-    }
-}
-
-- (void)theMapTap:(UITapGestureRecognizer *)tapGestureRecognizer
-{
-    self.individualEventView.hidden = YES;
-}
-
-//- (void)theMapTap2:(UIPanGestureRecognizer *)panGestureRecognizer
+//
+//-(void)viewWillAppear:(BOOL)animated
 //{
-//    if (panGestureRecognizer.state == UIGestureRecognizerStateBegan)
+//    [super viewWillAppear:animated];
+//
+//    self.locationManager = [[CLLocationManager alloc] init];
+//    self.locationManager.delegate = self;
+//    self.locationManager.distanceFilter = kCLDistanceFilterNone;
+//    self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+//    [self.locationManager startUpdatingLocation];
+//}
+//
+////- (void)queryForEvents: (PFGeoPoint *)userGeoPoint
+////{
+////
+////
+////    //need to make this so user can search around and also see events not around their current location?
+////
+////    PFQuery *query = [PFQuery queryWithClassName:@"Event"];
+////
+////    [query includeKey:@"creator"]; //
+////
+////    [query whereKey:@"locationGeoPoint" nearGeoPoint:userGeoPoint withinMiles:20];
+////    query.cachePolicy = kPFCachePolicyCacheThenNetwork;
+////    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+////     {
+////         [self.eventObjects addObjectsFromArray:objects];
+////
+////         for (PFObject *object in self.eventObjects)
+////         {
+////             ExploreAnnotation *exploreAnnotation = [[ExploreAnnotation alloc] init];
+////
+////             exploreAnnotation.geoPoint = [object objectForKey:@"locationGeoPoint"];
+////             exploreAnnotation.coordinate = CLLocationCoordinate2DMake(exploreAnnotation.geoPoint.latitude, exploreAnnotation.geoPoint.longitude);
+////             exploreAnnotation.title = [object objectForKey:@"title"];
+////             exploreAnnotation.details = [object objectForKey:@"details"];
+////             exploreAnnotation.object = object;
+////             exploreAnnotation.creator = [object objectForKey:@"creator"];
+////             exploreAnnotation.location = [object objectForKey:@"location"];
+////             exploreAnnotation.date = [object objectForKey:@"eventDate"];
+////
+////             exploreAnnotation.creatorImageFile = [[object objectForKey:@"creator"]objectForKey:@"userProfilePhoto"];
+////
+////             [exploreAnnotation.creatorImageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+////
+////                 exploreAnnotation.creatorImage = [UIImage imageWithData:data];
+////
+////                 [self.comparisonExploreAnnotationArray addObject:exploreAnnotation];
+////                 [self.mapView addAnnotation:exploreAnnotation];
+////                 
+////             }];
+////             
+////             exploreAnnotation.themeFile = [object objectForKey:@"mapThemeImage"];
+////             [exploreAnnotation.themeFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+////
+////                 exploreAnnotation.themeImage = [UIImage imageWithData:data];
+////
+////                 [self.comparisonExploreAnnotationArray addObject:exploreAnnotation];
+////                 [self.mapView addAnnotation:exploreAnnotation];
+////
+////             }];
+////
+//////             [self.mapView addAnnotation:exploreAnnotation];
+////         }
+////     }];
+////}
+//
+//-(void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
+//{
+//    NSLog(@"Change your location in the simulator!!!!");
+//}
+//
+//-(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
+//{
+//    [self.locationManager stopUpdatingLocation];
+//    [self.mapView setShowsUserLocation:YES];
+//
+//    self.location = [self.locationManager location];
+//
+//    PFGeoPoint *userGeoPoint = [PFGeoPoint geoPointWithLatitude:self.location.coordinate.latitude longitude:self.location.coordinate.longitude];
+//
+//    [self queryForEvents:userGeoPoint];
+//
+////    [self performSelector:@selector(delayForZoom)
+////               withObject:nil
+////               afterDelay:1.3];
+//
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//        [NSThread sleepForTimeInterval:1.3];
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            [self delayForZoom];
+//        });
+//    });
+//}
+//
+//- (void)delayForZoom
+//{
+//    MKCoordinateRegion mapRegion;
+//    mapRegion.center = self.location.coordinate;
+//    mapRegion.span.latitudeDelta = 0.10;
+//    mapRegion.span.longitudeDelta = 0.10;
+//    [self.mapView setRegion:mapRegion animated: YES];
+//}
+//
+//
+//#pragma mark - Map
+//
+//- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
+//{
+//    if ([annotation isKindOfClass:[MKUserLocation class]])
+//        return nil;
+//
+//    ExploreAnnotation *exploreAnnotation = (ExploreAnnotation *)annotation;
+//
+//    ExploreEventAnnotationView *annotationView = [[ExploreEventAnnotationView alloc]initWithAnnotation:exploreAnnotation reuseIdentifier:nil];
+//
+//    //VIK: Circular annotation
+////    annotationView.image = exploreAnnotation.themeImage;
+//    annotationView.image = exploreAnnotation.creatorImage;
+//
+//    annotationView.frame = CGRectMake(0,0,70,70);
+//
+//    annotationView.contentMode = UIViewContentModeScaleAspectFill;
+//
+//    annotationView.layer.cornerRadius = 35;
+//
+//
+//    annotationView.clipsToBounds = YES;
+//
+//    annotationView.layer.borderColor = [[UIColor colorWithRed:202/255.0 green:250/255.0 blue:53/255.0 alpha:1] CGColor];
+//
+//    annotationView.layer.borderWidth = 2.0;
+//    //
+//
+//    annotationView.geoPoint = exploreAnnotation.geoPoint;
+//
+//    ///I think you should just manipulate the actual annotation view itself in ExploreEventAnnotationView.h - add a new property
+//
+//    //double tap to expand?
+//    if (annotationView.gestureRecognizers.count == 0)
 //    {
-//        self.individualEventView.hidden = YES;
+//        UITapGestureRecognizer *tapping = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapTap:)];
+//        tapping.numberOfTapsRequired = 2;
+//        [annotationView addGestureRecognizer:tapping];
+//        annotationView.userInteractionEnabled = YES;
+//    }
+//
+//
+//    return annotationView;
+//}
+//
+//#pragma mark - Tap Gesture Recognizer
+//
+//- (void)tapTap:(UITapGestureRecognizer *)tapGestureRecognizer
+//{
+//
+//    NSLog(@"Tap Tap Tap");
+//
+//    ExploreEventAnnotationView *annotationView = (ExploreEventAnnotationView *)tapGestureRecognizer.view;
+//
+//    self.individualEventView.hidden = NO;
+//
+//    for (ExploreAnnotation *exploreAnnotation in self.comparisonExploreAnnotationArray)
+//    {
+//        if ([annotationView.geoPoint isEqual:exploreAnnotation.geoPoint])
+//    {
+//
+//        self.titleLabel.text = exploreAnnotation.title;
+//        self.dateLabel.text = exploreAnnotation.date;
+//        self.locationLabel.text = exploreAnnotation.location;
+//        self.detailsTextView.text = exploreAnnotation.details;
+//        //size to fit this
+//
+//        self.eventImageView.image = exploreAnnotation.themeImage;
+//
+//        self.eventObject = exploreAnnotation.object;
+//    } else {
+//    }
+//
 //    }
 //}
-
-- (IBAction)onExitButtonTapped:(id)sender
-{
-    self.individualEventView.hidden = YES;
-
-}
-
-#pragma mark - Segue
-
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if ([segue.identifier isEqualToString:@"FromExploreToIndividualSegue"])
-    {
-        IndividualEventViewController *individualEventViewController = segue.destinationViewController;
-        individualEventViewController.eventObject = self.eventObject;
-
-        //what is the best way to pass this?
-    }
-}
-
-
-
-@end
+//
+//- (void)theMapTap:(UITapGestureRecognizer *)tapGestureRecognizer
+//{
+//    self.individualEventView.hidden = YES;
+//}
+//
+////- (void)theMapTap2:(UIPanGestureRecognizer *)panGestureRecognizer
+////{
+////    if (panGestureRecognizer.state == UIGestureRecognizerStateBegan)
+////    {
+////        self.individualEventView.hidden = YES;
+////    }
+////}
+//
+//- (IBAction)onExitButtonTapped:(id)sender
+//{
+//    self.individualEventView.hidden = YES;
+//
+//}
+//
+//#pragma mark - Segue
+//
+//-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+//{
+//    if ([segue.identifier isEqualToString:@"FromExploreToIndividualSegue"])
+//    {
+//        IndividualEventViewController *individualEventViewController = segue.destinationViewController;
+//        individualEventViewController.eventObject = self.eventObject;
+//
+//        //what is the best way to pass this?
+//    }
+//}
+//
+//
+//
+//@end

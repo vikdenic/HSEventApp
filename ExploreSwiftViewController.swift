@@ -192,9 +192,4 @@ class ExploreSwiftViewController: UIViewController, CLLocationManagerDelegate, M
             individualEventVC.eventObject = eventObject
         }
     }
-
-
-
-
-
 }

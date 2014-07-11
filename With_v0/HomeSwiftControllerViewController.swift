@@ -45,7 +45,7 @@ extension Array{
     }
 }
 
-class HomeSwiftControllerViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource {
+class HomeSwiftControllerViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource, UIActionSheetDelegate {
 //    var tableView : UITableView?
 
     @IBOutlet var tableView: UITableView
@@ -65,6 +65,8 @@ class HomeSwiftControllerViewController: UIViewController, UIScrollViewDelegate,
 //    }
     var originalFrame : CGRect = CGRectMake(0, 0, 0, 0)
     var event : PFObject?
+
+    let limeGreen : UIColor = UIColor(red: 202/255.0, green: 250/255.0, blue: 53/255.0, alpha: 1)
 
     override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!)
     {
@@ -87,9 +89,7 @@ class HomeSwiftControllerViewController: UIViewController, UIScrollViewDelegate,
 
         originalFrame = self.tabBarController.tabBar.frame
 
-        let limeGreen : UIColor = UIColor(red: 202/255.0, green: 250/255.0, blue: 53/255.0, alpha: 1)
-
-        tabBarController.tabBar.tintColor = UIColor.greenColor()
+        tabBarController.tabBar.tintColor = limeGreen
 
         var currentUser : PFUser? = PFUser.currentUser()
 
@@ -101,6 +101,18 @@ class HomeSwiftControllerViewController: UIViewController, UIScrollViewDelegate,
         {
             performSegueWithIdentifier("showLogin", sender: self)
         }
+
+        var refreshControl2 = UIRefreshControl()
+        refreshControl2.addTarget(self, action: "refresh", forControlEvents: UIControlEvents.ValueChanged)
+
+        refreshControl = refreshControl2
+        tableView.addSubview(refreshControl)
+
+        navigationController.setNavigationBarHidden(false, animated: true)
+
+        var newBackButton = UIBarButtonItem(title: "Home", style: UIBarButtonItemStyle.Bordered, target: nil, action: nil)
+
+        navigationItem.backBarButtonItem = newBackButton
     }
 
     //NSNotificationCenter
@@ -173,12 +185,111 @@ class HomeSwiftControllerViewController: UIViewController, UIScrollViewDelegate,
         })
     }
 
+    override func viewWillAppear(animated: Bool)
+    {
+        tabBarController.tabBar.hidden = false
+    }
+
     //TableView
     func tableView(tableView: UITableView!, numberOfRowsInSection section: Int) -> Int
     {
+
+        return(self.eventArray.count)
     }
 
+    func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell!
+    {
+        let cell : HomeTableViewCell = tableView.dequeueReusableCellWithIdentifier("Cell") as HomeTableViewCell
 
+//IGNORING THIS B/C DOWNCASTING ENSURES CELL IS NOT NIL
+//        if (cell == nil) {
+//            cell = [[HomeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
+//        }
+
+        var object : PFObject = eventArray[indexPath.row]
+
+        var queue2 : dispatch_queue_t = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0) //0ul?
+
+        var userProfilePhoto : PFFile = object.objectForKey("creator").objectForKey("userProfilePhoto") as PFFile
+
+
+        userProfilePhoto.getDataInBackgroundWithBlock({data, error in
+            if data == nil
+            {
+                cell.creatorImageView.image = nil
+            }
+            else
+            {
+
+//**                dispatch_async(queue2, ^{
+//                    UIImage *temporaryImage = [UIImage imageWithData:data];
+                dispatch_async(queue2, ({
+                    var temporaryImage : UIImage = UIImage(data: data)
+
+                    cell.creatorImageView.layer.cornerRadius = cell.creatorImageView.bounds.size.width/2
+                    cell.creatorImageView.layer.borderColor = self.limeGreen.CGColor
+                    cell.creatorImageView.layer.borderWidth = 2.0
+                    cell.creatorImageView.layer.masksToBounds = true
+
+
+//**                dispatch_sync(dispatch_get_main_queue(), ^{
+//                    cell.creatorImageView.image = temporaryImage;
+//                    });
+                dispatch_sync(dispatch_get_main_queue(), ({
+                    cell.creatorImageView.image = temporaryImage
+                    }))
+                }))
+                var queue : dispatch_queue_t = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0) //0ul?
+
+                var file : PFFile = object.objectForKey("themeImage") as PFFile
+
+                file.getDataInBackgroundWithBlock({data, error in
+
+//**                    dispatch_async(queue, ^{
+//                        UIImage *image = [UIImage imageWithData:data];
+//
+//                        dispatch_sync(dispatch_get_main_queue(), ^{
+//                            cell.themeImageView.image = image;
+//                            });
+//                        });
+                    dispatch_async(queue2, ({
+
+                        var image = UIImage(data: data)
+
+                        dispatch_sync(dispatch_get_main_queue(), ({
+                            cell.themeImageView.image = image
+                        }))
+
+                        }))
+                })
+            }
+        })
+
+        var userName : PFObject = object.objectForKey("creator").objectForKey("username") as PFObject
+
+        cell.creatorNameLabel.text = "\(userName)"
+        cell.eventNameLabel.text = object.objectForKey("title") as String
+        cell.eventDateLabel.text = object.objectForKey("eventDate") as String
+        cell.accessoryType = UITableViewCellAccessoryType.None
+
+        var sectionsAmount : NSInteger = tableView.numberOfSections()
+        var rowsAmount : NSInteger = tableView.numberOfRowsInSection(indexPath.section)
+
+        if indexPath.section == sectionsAmount - 1 && indexPath.row == rowsAmount - 1
+        {
+            if !self.doingTheQuery
+            {
+                queryForEvents()
+            }
+        }
+
+        return cell
+    }
+
+    func tableView(tableView: UITableView!, didDeselectRowAtIndexPath indexPath: NSIndexPath!)
+    {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    }
 
 
     //ScrollStuff
@@ -250,8 +361,44 @@ class HomeSwiftControllerViewController: UIViewController, UIScrollViewDelegate,
 
     func scrollViewShouldScrollToTop(scrollView: UIScrollView!) -> Bool
     {
+        contract()
+        return true
     }
 
+    //IBACTIONS
+
+    @IBAction func showActionSheet(sender: AnyObject)
+    {
+
+        var actionSheet : UIActionSheet = UIActionSheet(title: nil, delegate: self, cancelButtonTitle: "Cancel", destructiveButtonTitle: nil)
+
+        actionSheet.showInView(view)
+    }
+
+    func actionSheet(actionSheet: UIActionSheet!, clickedButtonAtIndex buttonIndex: Int)
+    {
+        var theButtonIndex : String = actionSheet.buttonTitleAtIndex(buttonIndex)
+
+        if theButtonIndex == "Cancel"
+        {
+
+        }
+        else if theButtonIndex == "Report"
+        {
+
+        }
+
+    }
+
+    @IBAction func unwindSegueToHomeViewController(sender: UIStoryboardSegue)
+    {
+
+    }
+
+    @IBAction func unwindSegueInvitesToHome(sender: UIStoryboardSegue)
+    {
+
+    }
 
 }
 

@@ -38,6 +38,7 @@
     BOOL hidden;
 }
 
+//CONVERTED
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -87,6 +88,7 @@
     }
 }
 
+//CONVERTED
 -(void)viewWillAppear:(BOOL)animated
 {
     self.tabBarController.tabBar.hidden = NO;
@@ -213,12 +215,13 @@
 //}
 
 #pragma mark - Table View
-
+//CONVERTED
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return self.eventArray.count;
 }
 
+//* NEED TO FIGURE OUT DISPATCH STUFF
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     HomeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
@@ -296,6 +299,7 @@
     return cell;
 }
 
+//CONVERTED
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
